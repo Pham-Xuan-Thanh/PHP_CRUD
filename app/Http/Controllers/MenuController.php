@@ -19,7 +19,7 @@ class MenuController extends Controller
             'description' => (string)$request->input('description'),
             'file' => (binary)$request->input('inputFile')
         ]);
-        return redirect()->back();
+        return redirect()->route('menus');
     }
     public function index(){
         // dd(MenuModel::orderbyDesc('name')->paginate(10));

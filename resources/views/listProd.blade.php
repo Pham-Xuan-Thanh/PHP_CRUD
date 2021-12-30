@@ -3,6 +3,10 @@
 </head>
 <body>
     <div class="card-body">
+        <div class="d-flex flex-row-reverse">
+        <a href=" {{ route('menus.add') }}" style="height: 40" class="w-25"><button type="button"   class="btn btn-block btn-success   "  >Create <i class="fas fa-plus-circle"></i></button></a>
+            <p class="login-box-msg">Create your Products to Open ur shop</p>
+        </div>
         <table id="example" class="table table-bordered table-hover">
             <thead>
                 <tr>

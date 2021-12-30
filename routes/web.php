@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\User\LoginController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MenuController;
+use Illuminate\Routing\Redirector;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +14,17 @@ use App\Http\Controllers\MenuController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/login', [LoginController::class,'index'] );
+Route::prefix('auth')-> group(function(){
+    Route::get('login',[LoginController::class,'index'])->name('login');
+    Route::get('register',[LoginController::class,'registration'])->name('register');
+    Route::post('login/post',[LoginController::class,'postLogin'])->name('login.post');
+    Route::post('register/post',[LoginController::class,'postRegistration'])->name('register.post');
+    Route::get('logout',[LoginController::class,'logout'])->name('logout');
+
+});
 Route::prefix('/menus')->group(function(){
-    Route::get('/add', [MenuController::class,'create'] );
+    Route::get('/', [MenuController::class,'index'] )->name('menus');
+    Route::get('/add', [MenuController::class,'create'] )->name('menus.add');
     Route::post('/add', [MenuController::class,'add'] );
     Route::get('/list', [MenuController::class,'index'] );
     Route::delete('/destroy', [MenuController::class,'destroy'] );
@@ -25,5 +34,5 @@ Route::prefix('/menus')->group(function(){
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
