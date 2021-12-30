@@ -11,13 +11,12 @@ RUN apt-get update && apt-get install -y \
         nano \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \   
     && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install zip 
+    && docker-php-ext-install zip \
+    && docker-php-ext-install pdo_mysql mysqli
     
-
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN  a2enmod rewrite &&  service apache2 restart \
-     && pecl install mongodb && composer require mongodb/mongodb --ignore-platform-reqs
+RUN  a2enmod rewrite &&  service apache2 restart 
 
 RUN set -eux; \		
   { echo 'post_max_size = 100M'; \

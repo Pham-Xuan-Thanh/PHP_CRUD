@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\User\LoginController;
+use App\Http\Controllers\MenuController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +13,17 @@ use App\Http\Controllers\Admin\User\LoginController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/thanh', [LoginController::class,'index'] );
+Route::get('/login', [LoginController::class,'index'] );
+Route::prefix('/menus')->group(function(){
+    Route::get('/add', [MenuController::class,'create'] );
+    Route::post('/add', [MenuController::class,'add'] );
+    Route::get('/list', [MenuController::class,'index'] );
+    Route::delete('/destroy', [MenuController::class,'destroy'] );
+    Route::get('/edit/{menu}', [MenuController::class,'show'] );
+    Route::post('/edit/{menu}', [MenuController::class,'edit'] );
+
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
